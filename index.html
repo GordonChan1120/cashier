@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cashier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  </head>
+  <body class="bg-slate-100 text-slate-800">
+    <div class="max-w-7xl mx-auto p-6 space-y-6">
+      <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p class="text-sm uppercase tracking-wide text-sky-600 font-semibold">Dashboard</p>
+          <h1 class="text-3xl font-bold">Cashier</h1>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="rounded-lg bg-sky-600 px-4 py-2 text-white font-semibold shadow">Cashier</a>
+          <a href="stock.html" class="rounded-lg bg-slate-200 px-4 py-2 font-semibold shadow">Stock</a>
+          <button
+            id="exportBtn"
+            class="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-white font-semibold shadow hover:bg-emerald-700"
+          >
+            Export to Excel
+          </button>
+        </div>
+      </header>
+
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-2xl bg-white p-4 shadow">
+          <p class="text-sm text-slate-500">Total Purchases</p>
+          <h2 id="purchaseTotal" class="mt-1 text-2xl font-bold">0.00</h2>
+        </div>
+        <div class="rounded-2xl bg-white p-4 shadow">
+          <p class="text-sm text-slate-500">Total Quantity</p>
+          <h2 id="quantityTotal" class="mt-1 text-2xl font-bold">0</h2>
+        </div>
+        <div class="rounded-2xl bg-white p-4 shadow">
+          <p class="text-sm text-slate-500">Records Count</p>
+          <h2 id="recordCount" class="mt-1 text-2xl font-bold">0</h2>
+        </div>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow">
+        <h3 class="text-lg font-semibold mb-4">Add Purchase Record</h3>
+        <form id="recordForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-sm font-medium mb-1">Item</label>
+            <select id="item" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+              <option value="">Select item</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Quantity</label>
+            <input id="quantity" type="number" min="0" step="1" placeholder="0" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Notes</label>
+            <input id="notes" type="text" placeholder="Optional" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+          <div class="md:col-span-3 flex justify-end">
+            <button type="submit" class="rounded-lg bg-sky-600 px-5 py-2.5 text-white font-semibold hover:bg-sky-700">
+              Add Record
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="rounded-2xl bg-white shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold">Date</th>
+                <th class="px-4 py-3 text-left font-semibold">Item</th>
+                <th class="px-4 py-3 text-left font-semibold">Qty</th>
+                <th class="px-4 py-3 text-left font-semibold">Unit Price</th>
+                <th class="px-4 py-3 text-left font-semibold">Total</th>
+                <th class="px-4 py-3 text-left font-semibold">Notes</th>
+                <th class="px-4 py-3 text-left font-semibold">Action</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
